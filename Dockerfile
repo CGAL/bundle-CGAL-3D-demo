@@ -1,0 +1,19 @@
+FROM cgal/testsuite-docker:centos6
+MAINTAINER Laurent Rineau <laurent.rineau@cgal.org>
+
+RUN yum -y install centos-release-scl-rh && \
+    yum -y install devtoolset-4-gcc-c++ && \
+    yum -y clean all
+
+RUN curl -SLO https://github.com/probonopd/linuxdeployqt/archive/master.tar.gz && \
+    tar xf master.tar.gz && cd linuxdeployqt* && \
+    qmake-qt5 linuxdeployqt.pro && \
+    make -j4 && cp -a ./linuxdeployqt/linuxdeployqt /usr/bin && \
+    cd .. && rm -rf linuxdeployqt* && rm master.tar.gz
+
+RUN curl -SLO https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2 && \
+    tar xf patchelf-0.9.tar.bz2 && cd patchelf-0.9 && ./configure  && make && \
+    make install && cd .. && rm -rf patchelf*
+
+ENTRYPOINT ["scl", "enable", "devtoolset-4"]
+CMD ["bash"]
