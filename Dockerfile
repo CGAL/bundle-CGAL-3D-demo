@@ -3,7 +3,7 @@ MAINTAINER Laurent Rineau <laurent.rineau@cgal.org>
 
 RUN yum -y install centos-release-scl-rh && \
     yum -y install devtoolset-4-gcc-c++ \
-                   /lib64/libfuse.so.2 && \
+                   /lib64/libfuse.so.2 tbb-devel.x86_64 && \
     yum -y clean all
 
 RUN curl -SLO https://github.com/probonopd/linuxdeployqt/archive/master.tar.gz && \
