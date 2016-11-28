@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=CGAL 3D Demo
+Exec=AppRun %F
+Icon=default
+Terminal=true
