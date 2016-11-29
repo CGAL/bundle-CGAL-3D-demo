@@ -1,13 +1,16 @@
 language: ruby
 sudo: required
+
 services:
 - docker
 
-script:
-  - docker build -t cgal/bundle-3d-demo .
+before_install:
+- openssl aes-256-cbc -K $encrypted_4a3430b8d014_key -iv $encrypted_4a3430b8d014_iv
+  -in secret.txt.enc -out scripts/secret.txt -d
 
-deploy:
-  provider: script
-  script: scripts/deploy-image-to-docker.sh
-  on:
-    branch: master
+script:
+- docker build -t cgal/bundle-3d-demo .
+
+after_success:
+- source scripts/secret.txt
+- if [ "$TRAVIS_BRANCH" == "master" ]; then docker login -u $USER -p $PASS; docker push cgal/bundle-3d-demo; fi
