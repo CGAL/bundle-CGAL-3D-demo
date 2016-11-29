@@ -16,5 +16,6 @@ linuxdeployqt /dist/Polyhedron_3 $(find -name '*plugin*.so' -printf ' -executabl
 rm /dist/AppRun
 printf '#!/bin/sh\n\nDIR=$(dirname $0)\nLD_LIBRARY_PATH=$DIR/lib;export LD_LIBRARY_PATH;$DIR/Polyhedron_3 $@\n' > /dist/AppRun
 chmod a+x /dist/AppRun
+cp -a /scripts/cgal_logo_ipe_2013.png /dist/default.png
 cp -a /scripts/default.desktop /dist/
 appimagetool /dist
