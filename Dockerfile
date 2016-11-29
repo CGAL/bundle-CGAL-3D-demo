@@ -3,7 +3,7 @@ MAINTAINER Laurent Rineau <laurent.rineau@cgal.org>
 
 RUN yum -y install centos-release-scl-rh && \
     yum -y install devtoolset-4-gcc-c++ \
-                   /lib64/libfuse.so.2 tbb-devel.x86_64 && \
+                   /lib64/libfuse.so.2 \
     yum -y clean all
 
 RUN curl -SLO https://github.com/probonopd/linuxdeployqt/archive/master.tar.gz && \
@@ -19,6 +19,12 @@ RUN curl -SLO https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.
 RUN curl -SLO https://github.com/probonopd/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage && \
     chmod a+x appimage* && ./appimagetool* --appimage-extract && \
     mv /squashfs-root/usr/bin/* /usr/bin && rm -rf /squashfs-root /appimage*
+
+RUN curl -SLO https://www.threadingbuildingblocks.org/sites/default/files/software_releases/linux/tbb44_20160803oss_lin.tgz && \
+    tar -C /opt -xf tbb*.tgz && \
+    rm tbb*tgz
+
+ENV TBBROOT=/opt/tbb44_20160803oss TBB_ARCH_PLATFORM=intel64/gcc4.4
 
 COPY qtlogging.ini /usr/share/qt5
 
