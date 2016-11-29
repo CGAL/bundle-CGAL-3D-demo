@@ -1,0 +1,13 @@
+language: ruby
+sudo: required
+services:
+- docker
+
+script:
+  - docker build -t cgal/bundle-3d-demo .
+
+deploy:
+  provider: script
+  script: scripts/deploy-image-to-docker.sh
+  on:
+    branch: master
