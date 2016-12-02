@@ -13,4 +13,4 @@ script:
 
 after_success:
 - source scripts/secret.txt
-- if [ "$TRAVIS_BRANCH" == "master" ]; then docker login -u $USER -p $PASS; docker push cgal/bundle-3d-demo; fi
+- if [ "$TRAVIS_EVENT_TYPE" != "pull_request" -a "$TRAVIS_BRANCH" = "master" ]; then docker login -u lrineau -p $PASS; docker push cgal/bundle-3d-demo; fi
