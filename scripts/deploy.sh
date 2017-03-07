@@ -5,6 +5,7 @@ PATH=/usr/lib64/qt5/bin:$PATH
 export PATH
 
 [ -d /dist ] || mkdir /dist
+[ -d /results ] || mkdir /results
 cd /build/demo/Polyhedron
 find -name '*.so' | xargs -l10 cp --parents -t /dist
 cp Polyhedron_3 /dist/
@@ -18,4 +19,5 @@ printf '#!/bin/sh\n\nDIR=$(dirname $0)\nLD_LIBRARY_PATH=$DIR/lib;export LD_LIBRA
 chmod a+x /dist/AppRun
 cp -a /scripts/cgal_logo_ipe_2013.png /dist/default.png
 cp -a /scripts/default.desktop /dist/
-appimagetool /dist
+cd /results
+appimagetool -v /dist
