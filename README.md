@@ -1,4 +1,4 @@
-# bundle-CGAL-3D-demo [![Build Status]][status-img]
+# `docker.io/cgal/bundle-3d-demo` [![Build Status of the ]][status-img]
 Automatic building of the CGAL 3D demo (Polyhedron Demo)
 
 ## Usage, TL;DR;
@@ -7,7 +7,7 @@ A simple command line to build the demo from `$HOME/Git/cgal`, and put it
 in the `results/` sub-directory of your current working-directory:
 
 ```shell
-docker run --rm -v $PWD/results:/results:Z -v ~/Git/cgal:/cgal:ro cgal/bundle-3d-demo  /scripts/build.sh -j6 && /scripts/deploy.sh'
+docker run --rm -v $PWD/results:/results:Z -v ~/Git/cgal:/cgal:ro docker.io/cgal/bundle-3d-demo  /scripts/build.sh -j6 && /scripts/deploy.sh'
 ```
 
 ## Usage
@@ -51,7 +51,7 @@ interpreted by a shell. Quote it with single-quotes (`'`).
 For example, a possible debugging command line is:
 
 ```shell
-docker run --rm -t -i -v $PWD/build:/build:Z -v $PWD/results:/results:Z -v $PWD/scripts:/scripts:ro -v $PWD/dist:/dist:Z -v ~/Git/cgal:/cgal:ro cgal/bundle-3d-demo  'bash -x /scripts/build.sh -j6 VERBOSE=1 && bash -x /scripts/deploy.sh'
+docker run --rm -t -i -v $PWD/build:/build:Z -v $PWD/results:/results:Z -v $PWD/scripts:/scripts:ro -v $PWD/dist:/dist:Z -v ~/Git/cgal:/cgal:ro docker.io/cgal/bundle-3d-demo  'bash -x /scripts/build.sh -j6 VERBOSE=1 && bash -x /scripts/deploy.sh'
 ```
 
 The extra `:Z` option to volume specification is used on Linux version
