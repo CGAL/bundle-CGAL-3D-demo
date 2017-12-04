@@ -1,4 +1,4 @@
-# `docker.io/cgal/bundle-3d-demo` [![Build Status of the ]][status-img]
+# `docker.io/cgal/bundle-3d-demo` [![Build Status]][status-img]
 Automatic building of the CGAL 3D demo (Polyhedron Demo)
 
 ## Usage, TL;DR;
