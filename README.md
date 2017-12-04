@@ -7,7 +7,7 @@ A simple command line to build the demo from `$HOME/Git/cgal`, and put it
 in the `results/` sub-directory of your current working-directory:
 
 ```shell
-docker run --rm -v $PWD/results:/results:Z -v ~/Git/cgal:/cgal:ro docker.io/cgal/bundle-3d-demo  /scripts/build.sh -j6 && /scripts/deploy.sh'
+docker run --rm -v $PWD/results:/results:Z -v ~/Git/cgal:/cgal:ro docker.io/cgal/bundle-3d-demo  `/scripts/build.sh -j6 && /scripts/deploy.sh'
 ```
 
 ## Usage
