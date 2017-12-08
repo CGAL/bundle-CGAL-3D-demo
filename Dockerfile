@@ -4,12 +4,14 @@ MAINTAINER Laurent Rineau <laurent.rineau@cgal.org>
 RUN yum -y install centos-release-scl-rh && \
     yum -y install devtoolset-4-gcc-c++ \
                    /lib64/libfuse.so.2 \
+                   git libgl1-mesa-dev && \
     yum -y clean all
 
 RUN curl -SLO https://github.com/probonopd/linuxdeployqt/archive/master.tar.gz && \
-    tar xf master.tar.gz && cd linuxdeployqt* && \
+    tar xf master.tar.gz && cd linuxdeployqt-master/ && \
+    export PATH=$(readlink -f /tmp/.mount_QtCreator-*-x86_64/*/gcc_64/bin/):$PATH && \
     qmake-qt5 linuxdeployqt.pro && \
-    make -j4 && cp -a ./linuxdeployqt/linuxdeployqt /usr/bin && \
+    make -j4 && make -j4 install && \
     cd .. && rm -rf linuxdeployqt* && rm master.tar.gz
 
 RUN curl -SLO https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2 && \
