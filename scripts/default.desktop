@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
 Name=CGAL 3D Demo
-Exec=AppRun %F
+Exec=Polyhedron_3 %F
 Icon=default
 Terminal=true
