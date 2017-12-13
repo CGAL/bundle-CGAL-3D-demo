@@ -4,7 +4,7 @@ MAINTAINER Laurent Rineau <laurent.rineau@cgal.org>
 RUN yum -y install centos-release-scl-rh && \
     yum -y install devtoolset-4-gcc-c++ \
                    /lib64/libfuse.so.2 \
-                   git libgl1-mesa-dev && \
+                   git libgl1-mesa-dev opencv && \
     yum -y clean all
 
 RUN curl -SLO https://github.com/probonopd/linuxdeployqt/archive/master.tar.gz && \
@@ -27,6 +27,21 @@ RUN curl -SLO https://www.threadingbuildingblocks.org/sites/default/files/softwa
     rm tbb*tgz
 
 ENV TBBROOT=/opt/tbb44_20160803oss TBB_ARCH_PLATFORM=intel64/gcc4.4
+
+RUN curl -s -SL http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz | tar xz && \
+    cd VTK-6.3.0 && \
+    cmake . && \
+    make -j2 && \
+    make -j 2 install && \
+    cd .. && rm -rf VTK-6.3.0
+RUN curl -s -SL https://github.com/CGAL/LAStools/archive/master.tar.gz | tar xz \
+ && cd ./LAStools-master \
+ && cmake -DCMAKE_CXX_COMPILER:FILEPATH=/opt/rh/devtoolset-4/root/usr/bin/g++ -DCMAKE_CXX_FLAGS=-std=c++11 . \
+ && make -j "$(nproc)" \
+ && make install \
+ && cd .. \
+ && rm -rf LAStools-master 
+
 
 COPY qtlogging.ini /usr/share/qt5
 
