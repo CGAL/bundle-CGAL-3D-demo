@@ -44,6 +44,6 @@ RUN curl -s -SL https://github.com/CGAL/LAStools/archive/master.tar.gz | tar xz 
 
 
 COPY qtlogging.ini /usr/share/qt5
-
+COPY scripts /scripts
 ENTRYPOINT ["scl", "enable", "devtoolset-4"]
 CMD ["bash"]
