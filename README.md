@@ -1,7 +1,7 @@
 # `docker.io/cgal/bundle-3d-demo` [![Build Status]][status-img]
 Automatic building of the CGAL 3D demo (Polyhedron Demo)
 
-## Usage, TL;DR;
+## Overview
 
 A simple command line to build the demo from `$HOME/Git/cgal`, and put it
 in the `results/` sub-directory of your current working-directory:
