@@ -2,17 +2,18 @@ FROM cgal/testsuite-docker:centos6
 MAINTAINER Laurent Rineau <laurent.rineau@cgal.org>
 
 RUN yum -y install centos-release-scl-rh && \
-    yum -y install devtoolset-4-gcc-c++ \
+    yum -y install devtoolset-7-gcc-c++ \
                    /lib64/libfuse.so.2 \
-                   git libgl1-mesa-dev opencv && \
+                   git libgl1-mesa-dev && \
+    yum -y install metis-devel opencv-devel libgfortran4 bzip2-devel doxygen && \
     yum -y clean all
 
-RUN curl -SLO https://github.com/probonopd/linuxdeployqt/archive/master.tar.gz && \
-    tar xf master.tar.gz && cd linuxdeployqt-master/ && \
+    
+RUN git clone https://github.com/probonopd/linuxdeployqt.git && cd linuxdeployqt && git checkout 4 && \
     export PATH=$(readlink -f /tmp/.mount_QtCreator-*-x86_64/*/gcc_64/bin/):$PATH && \
     qmake-qt5 linuxdeployqt.pro && \
     make -j4 && make -j4 install && \
-    cd .. && rm -rf linuxdeployqt* && rm master.tar.gz
+    cd .. && rm -rf linuxdeployqt* 
 
 RUN curl -SLO https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2 && \
     tar xf patchelf-0.9.tar.bz2 && cd patchelf-0.9 && ./configure  && make && \
@@ -34,16 +35,33 @@ RUN curl -s -SL http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz | tar xz &
     make -j2 && \
     make -j 2 install && \
     cd .. && rm -rf VTK-6.3.0
+RUN ls /opt
 RUN curl -s -SL https://github.com/CGAL/LAStools/archive/master.tar.gz | tar xz \
  && cd ./LAStools-master \
- && cmake -DCMAKE_CXX_COMPILER:FILEPATH=/opt/rh/devtoolset-4/root/usr/bin/g++ -DCMAKE_CXX_FLAGS=-std=c++11 . \
+ && cmake -DCMAKE_CXX_COMPILER:FILEPATH=/opt/rh/devtoolset-7/root/usr/bin/g++ -DCMAKE_CXX_FLAGS=-std=c++11 . \
  && make -j "$(nproc)" \
  && make install \
  && cd .. \
  && rm -rf LAStools-master 
 
+RUN curl -s -SL http://sourceforge.net/projects/boost/files/boost/1.55.0/boost_1_55_0.tar.gz | tar xz && \
+    cd boost_1_55_0 && \
+    ./bootstrap.sh --with-libraries=iostreams,serialization && \
+    ./b2 -d0 --prefix=/usr/local/ install && \
+    cd .. && rm -rf boost_*
+
+RUN curl -s -SL http://ftp.gnu.org/gnu/glpk/glpk-4.35.tar.gz | tar xz && cd glpk-4.35 && ./configure && make && make install && cd .. && rm -rf glpk-4.35
+
+RUN curl -SLO https://github.com/Kitware/CMake/releases/download/v3.17.1/cmake-3.17.1-Linux-x86_64.sh && bash cmake-3.17.1-Linux-x86_64.sh --skip-license && rm -rf cmake-3.17.1-Linux-x86_64.sh
+
+RUN git clone https://github.com/STORM-IRIT/OpenGR.git && cd OpenGR && mkdir build && cd build && cmake -DCMAKE_CXX_COMPILER:FILEPATH=/opt/rh/devtoolset-7/root/usr/bin/g++ -DCMAKE_CXX_FLAGS=-std=c++11 .. && make && make install && cd ../.. && rm -rf OpenGR
+
+RUN git clone https://github.com/ethz-asl/libnabo.git && cd libnabo && mkdir build && cd build && cmake -DCMAKE_CXX_COMPILER:FILEPATH=/opt/rh/devtoolset-7/root/usr/bin/g++ -DCMAKE_CXX_FLAGS=-std=c++11 .. && make  && make install && cd ../.. && rm -rf libnabo
+
+RUN git clone https://github.com/ethz-asl/libpointmatcher.git && cd libpointmatcher && mkdir build && cd build && cmake -DCMAKE_CXX_COMPILER:FILEPATH=/opt/rh/devtoolset-7/root/usr/bin/g++ -DCMAKE_CXX_FLAGS=-std=c++11 .. && make && make install && cd ../.. && rm -rf libpointmatcher
+
 
 COPY qtlogging.ini /usr/share/qt5
 COPY scripts /scripts
-ENTRYPOINT ["scl", "enable", "devtoolset-4"]
+ENTRYPOINT ["scl", "enable", "devtoolset-7"]
 CMD ["bash"]
