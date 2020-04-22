@@ -4,3 +4,4 @@ Name=CGAL 3D Demo
 Exec=Polyhedron_3 %F
 Icon=default
 Terminal=true
+Categories=Utility;
