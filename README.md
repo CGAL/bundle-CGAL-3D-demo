@@ -1,7 +1,7 @@
 # `docker.io/cgal/bundle-3d-demo` [![Build Status]][status-img]
 Automatic building of the CGAL 3D demo (Polyhedron Demo)
 
-## Usage, TL;DR;
+## Overview
 
 A simple command line to build the demo from `$HOME/Git/cgal`, and put it
 in the `results/` sub-directory of your current working-directory:
@@ -57,7 +57,7 @@ docker run --rm -t -i -v $PWD/build:/build:Z -v $PWD/results:/results:Z -v $PWD/
 The extra `:Z` option to volume specification is used on Linux version
 where docker-selinux is enabled. It allows the container to write to the directory.
 
-[Build Status]: https://travis-ci.org/lrineau/bundle-CGAL-3D-demo.svg?branch=master
-[status-img]: https://travis-ci.org/lrineau/bundle-CGAL-3D-demo
+[Build Status]: https://travis-ci.org/CGAL/bundle-CGAL-3D-demo.svg?branch=master
+[status-img]: https://travis-ci.org/CGAL/bundle-CGAL-3D-demo
 [`linuxdeployqt`]: https://github.com/probonopd/linuxdeployqt
 [`appimagetool`]: https://github.com/probonopd/AppImageKit
