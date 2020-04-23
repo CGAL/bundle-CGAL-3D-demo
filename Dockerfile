@@ -46,8 +46,8 @@ RUN curl -s -SL https://github.com/CGAL/LAStools/archive/master.tar.gz | tar xz 
 
 RUN curl -s -SL http://sourceforge.net/projects/boost/files/boost/1.67.0/boost_1_67_0.tar.gz | tar xz && \
     cd boost_1_67_0 && \
-    ./bootstrap.sh --without-libraries=graph_parallel,python,locale,mpi,signals,wave && \
-    ./b2 -d0 --prefix=/usr/local/ install && \
+    ./bootstrap.sh --with-libraries=chrono,date_time,filesystem,system,iostreams,serialization,thread,program_options && \
+    ./b2 -d2 --prefix=/usr/local/ install && \
     cd .. && rm -rf boost_*
 
 #RUN curl -SLO https://github.com/Kitware/CMake/releases/download/v3.17.1/cmake-3.17.1-Linux-x86_64.sh && bash cmake-3.17.1-Linux-x86_64.sh --skip-license && rm -rf cmake-3.17.1-Linux-x86_64.sh
