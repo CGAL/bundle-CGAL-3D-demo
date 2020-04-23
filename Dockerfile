@@ -9,10 +9,10 @@ RUN yum -y install centos-release-scl-rh && \
     yum -y clean all
 
     
-RUN git clone https://github.com/probonopd/linuxdeployqt.git && cd linuxdeployqt && git checkout 4 && \
+RUN git clone https://github.com/probonopd/linuxdeployqt.git && cd linuxdeployqt && \
     export PATH=$(readlink -f /tmp/.mount_QtCreator-*-x86_64/*/gcc_64/bin/):$PATH && \
     qmake-qt5 linuxdeployqt.pro && \
-    make -j4 && cd /usr/bin && ln -s /linuxdeployqt/linuxdeployqt/linuxdeployqt . 
+    make -j4 && cd /bin && ln -s /linuxdeployqt/bin/linuxdeployqt . 
 
 RUN curl -SLO https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2 && \
     tar xf patchelf-0.9.tar.bz2 && cd patchelf-0.9 && ./configure  && make && \
