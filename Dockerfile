@@ -65,4 +65,4 @@ COPY scripts /scripts
 
 ENV TBBROOT=/opt/tbb2018_20180618oss TBB_ARCH_PLATFORM=intel64/gcc4.4
 #ENTRYPOINT ["scl", "enable", "devtoolset-7"]
-ENTRYPOINT ["/scripts/docker_entrypoint.sh"]
+CMD ["/scripts/docker_entrypoint.sh"]
